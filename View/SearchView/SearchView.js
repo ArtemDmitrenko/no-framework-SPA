@@ -3,26 +3,22 @@ import EventObserver from "../../EventObserver/EventObserver.js";
 class SearchView extends EventObserver {
   constructor(container) {
     super();
-    this._render(container, true);
+    this._render(container);
     this._addEventListeners();
   }
 
   updateView(urlParam) {
     this.inputValue = urlParam;
-    this._render(this.el, false);
+    this._render(this.el);
   }
 
-  _render(container, isButtonDisabled) {
+  _render(container) {
     this.el = container;
     const searchHtml = `
       <div class="search">
         <form class="search__input-block">
-          <input class="search__input" name="search" type="text" value="${
-            this.inputValue
-          }"/>
-          <button class="search__button" ${
-            isButtonDisabled ? "disabled" : ""
-          } type="submit">Найти</button>
+          <input class="search__input" name="search" type="text" value="${this.inputValue}"/>
+          <button class="search__button"  type="submit">Найти</button>
         </form>
       </div>
     `;
@@ -43,10 +39,11 @@ class SearchView extends EventObserver {
   }
 
   _handleInputChange = (e) => {
+    console.log(e.target.value);
     e.preventDefault();
     this.inputValue = e.target.value;
     this._deleteEventListeners();
-    this._render(this.el, this.inputValue === "");
+    this._render(this.el);
     this._addEventListeners();
     this.inputEl.focus();
     this.inputEl.setSelectionRange(
@@ -61,6 +58,7 @@ class SearchView extends EventObserver {
   };
 
   _addSearchParam(searchParam) {
+    console.log(searchParam);
     const newURL = new URL(window.location.href);
     newURL.searchParams.set("search", searchParam);
     if (history.pushState) {
