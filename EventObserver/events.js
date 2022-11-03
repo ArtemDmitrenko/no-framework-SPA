@@ -1,0 +1,4 @@
+export const EVENTS = {
+  CHECK_POST: "CHECK_POST",
+  UPDATE_POSTS: "UPDATE_POSTS",
+};
